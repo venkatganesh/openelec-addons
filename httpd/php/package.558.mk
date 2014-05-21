@@ -35,53 +35,67 @@ PKG_MAINTAINER="none"
 PKG_AUTORECONF="no"
 
 pre_configure_target() {
-	# we need httpd host folder so build it first (could be done better probably)
-	(
-	  cd $ROOT
-	  $SCRIPTS/build httpd:host
-	)
+  # we need httpd host folder so build it first (could be done better probably)
+  (
+    cd $ROOT
+    $SCRIPTS/build httpd:host
+  )
 	
-	APXS_FILE=$(ls -d $ROOT/$BUILD/httpd-*)/.$HOST_NAME/support/apxs
-	chmod +x $APXS_FILE
+  APXS_FILE=$(ls -d $ROOT/$BUILD/httpd-*)/.$HOST_NAME/support/apxs
+  chmod +x $APXS_FILE
 
-	CFLAGS="$CFLAGS -I$SYSROOT_PREFIX/usr/include/libxml2"
-    LDLAGS="$LDFLAGS -I$SYSROOT_PREFIX/usr/lib"
+  CFLAGS="$CFLAGS -I$SYSROOT_PREFIX/usr \
+                  -I$SYSROOT_PREFIX/usr/include \
+                  -I$SYSROOT_PREFIX/usr/include/libxml2 \
+                  -I$SYSROOT_PREFIX/usr/include/freetype2"	
 
-	PKG_CONFIGURE_OPTS_TARGET="--disable-all \
-                               --without-pear \
-                               --with-config-file-path=/storage/.xbmc/userdata/addon_data/service.web.httpd/srvroot/conf \
-                               --localstatedir=/var \
-                               --enable-sockets \
-                               --enable-session \
-                               --enable-posix \
-                               --enable-mbstring \
-                               --enable-libxml \
-                               --enable-xml \
-                               --enable-xmlreader \
-                               --enable-xmlwriter \
-                               --enable-simplexml \
-                               --with-libxml-dir=$SYSROOT_PREFIX/usr \
-                               --with-curl=$SYSROOT_PREFIX/usr \
-                               --with-openssl=$SYSROOT_PREFIX/usr \
-                               --with-zlib=$SYSROOT_PREFIX/usr \
-						       --disable-cgi \
-                               --without-gettext \
-                               --without-gmp \
-                               --enable-json \
-                               --disable-pcntl \
-                               --disable-sysvmsg \
-                               --disable-sysvsem \
-                               --disable-sysvshm \
-                               --disable-filter \
-                               --disable-calendar \
-                               --with-pcre-regex \
-                               --without-sqlite3 \
-                               --enable-pdo \
-                               --without-pdo-sqlite \
-						       --with-mysql=$SYSROOT_PREFIX/usr \
-						       --with-mysql-sock=/var/tmp/mysql.socket \
-						       --with-pdo-mysql=$SYSROOT_PREFIX/usr \
-                               --with-apxs2=$APXS_FILE"	
+  PKG_CONFIGURE_OPTS_TARGET="--disable-all \
+                             --without-pear \
+                             --with-config-file-path=/storage/.xbmc/userdata/addon_data/service.web.httpd/srvroot/conf \
+                             --localstatedir=/var \
+                             --enable-sockets \
+                             --enable-session \
+                             --enable-posix \
+                             --enable-mbstring \
+                             --enable-zip \
+                             --enable-libxml \
+                             --enable-xml \
+                             --enable-xmlreader \
+                             --enable-xmlwriter \
+                             --enable-simplexml \
+                             --with-libxml-dir=$SYSROOT_PREFIX/usr \
+                             --with-curl=$SYSROOT_PREFIX/usr \
+                             --with-openssl=$SYSROOT_PREFIX/usr \
+                             --with-zlib=$SYSROOT_PREFIX/usr \
+                             --with-bz2=$SYSROOT_PREFIX/usr \
+                             --with-zlib=$SYSROOT_PREFIX/usr
+                             --disable-cgi \
+                             --without-gettext \
+                             --without-gmp \
+                             --enable-json \
+                             --enable-pcntl \
+                             --disable-sysvmsg \
+                             --disable-sysvsem \
+                             --disable-sysvshm \
+                             --enable-filter \
+                             --enable-calendar \
+                             --with-pcre-regex \
+                             --without-sqlite3 \
+                             --enable-pdo \
+                             --without-pdo-sqlite \
+                             --with-mysql=$SYSROOT_PREFIX/usr \
+                             --with-mysql-sock=/var/tmp/mysql.socket \
+                             --with-pdo-mysql=$SYSROOT_PREFIX/usr \
+                             --with-gd \
+                             --enable-gd-native-ttf \
+                             --enable-gd-jis-conv \
+                             --with-jpeg-dir=$SYSROOT_PREFIX/usr \
+                             --with-freetype-dir=$SYSROOT_PREFIX/usr \
+                             --with-png-dir=$SYSROOT_PREFIX/usr \
+                             --with-apxs2=$APXS_FILE"	
+
+  # quick hack
+  sed -i "s|freetype2/freetype/freetype.h|freetype2/freetype.h|g" ../configure
 }
 
 post_configure_target() {
