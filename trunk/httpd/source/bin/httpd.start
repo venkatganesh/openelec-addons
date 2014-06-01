@@ -1,7 +1,24 @@
 #!/bin/sh
 
-ADDON_DIR="$HOME/.xbmc/addons/service.web.httpd"
-ADDON_HOME="$HOME/.xbmc/userdata/addon_data/service.web.httpd"
+################################################################################
+#      This file is part of OpenELEC - http://www.openelec.tv
+#      Copyright (C) 2009-2012 Stephan Raue (stephan@openelec.tv)
+#
+#  This Program is free software; you can redistribute it and/or modify
+#  it under the terms of the GNU General Public License as published by
+#  the Free Software Foundation; either version 2, or (at your option)
+#  any later version.
+#
+#  This Program is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+#  GNU General Public License for more details.
+#
+#  You should have received a copy of the GNU General Public License
+#  along with OpenELEC.tv; see the file COPYING.  If not, write to
+#  the Free Software Foundation, 51 Franklin Street, Suite 500, Boston, MA 02110, USA.
+#  http://www.gnu.org/copyleft/gpl.html
+################################################################################
 
 # exit if already running
 PID=$(ps aux | grep "$ADDON_DIR/bin/httpd " | grep -v grep | awk '{print $1}' | sort -k1 | head -n 1)
@@ -12,16 +29,25 @@ fi
 
 # service setup
 . /etc/profile
-#oe_setup_addon service.web.httpd
+oe_setup_addon service.web.httpd
 
-# copy files to user dir
+# make all bin's executable
+chmod a+x $ADDON_DIR/bin/*
+
+# copy initial www files to user dir
 mkdir -p "$ADDON_HOME"
 if [ ! -d "$ADDON_HOME/www" ]; then
 	mv "$ADDON_DIR/www" "$ADDON_HOME"
+else
+	rm -rf "$ADDON_DIR/www"
 fi
+
+# copy initial config files to user dir
 if [ ! -d "$ADDON_HOME/srvroot" ]; then
 	mv "$ADDON_DIR/srvroot" "$ADDON_HOME"
 	mkdir -p "$ADDON_HOME/srvroot/logs"
+else
+	rm -rf "$ADDON_DIR/srvroot"
 fi
 
 # create dir for mutex
