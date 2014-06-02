@@ -1,8 +1,8 @@
 #!/bin/sh
 
 ################################################################################
-#      This file is part of OpenELEC - http://www.openelec.tv
-#      Copyright (C) 2009-2012 Stephan Raue (stephan@openelec.tv)
+#  This file is part of OpenELEC - http://www.openelec.tv
+#  Copyright (C) 2009-2012 Stephan Raue (stephan@openelec.tv)
 #
 #  This Program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -20,16 +20,16 @@
 #  http://www.gnu.org/copyleft/gpl.html
 ################################################################################
 
+# service setup
+. /etc/profile
+oe_setup_addon service.web.httpd
+
 # exit if already running
 PID=$(ps aux | grep "$ADDON_DIR/bin/httpd " | grep -v grep | awk '{print $1}' | sort -k1 | head -n 1)
 if [ "$PID" != "" ]; then
 	echo "Apache is already running"
 	exit 0
 fi
-
-# service setup
-. /etc/profile
-oe_setup_addon service.web.httpd
 
 # make all bin's executable
 chmod a+x $ADDON_DIR/bin/*

@@ -1,0 +1,15 @@
+[Unit]
+Description=MySQL server
+After=network.target
+
+[Service]
+Type=forking
+ExecStart=/bin/sh -c "exec sh /storage/.xbmc/addons/service.databases.mysql/bin/mysql-server.start"
+ExecStop=/bin/sh -c "exec sh /storage/.xbmc/addons/service.databases.mysql/bin/mysql-server.stop"
+TimeoutStopSec=5
+Restart=always
+RestartSec=10
+StartLimitInterval=0
+
+[Install]
+WantedBy=xbmc.target
