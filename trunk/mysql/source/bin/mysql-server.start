@@ -57,7 +57,7 @@ mkdir -p /var/tmp/
 mkdir -p /var/run/
 
 # start mysqld
-$ADDON_DIR/bin/mysqld --defaults-file=$ADDON_HOME/my.cnf &
+$ADDON_DIR/bin/mysqld --defaults-file=$ADDON_HOME/my.cnf --thread_stack=512000 &
 
 # set a root password
 if [ $FIRSTRUN == 1 ] ; then
