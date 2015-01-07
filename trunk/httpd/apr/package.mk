@@ -1,6 +1,8 @@
 ################################################################################
 #      This file is part of OpenELEC - http://www.openelec.tv
 #      Copyright (C) 2009-2014 Stephan Raue (stephan@openelec.tv)
+#      Copyright (C) 2014-2015 streppuiu
+#      Copyright (C) 2014 ultraman
 #
 #  OpenELEC is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -76,5 +78,6 @@ post_configure_host() {
 }
 
 makeinstall_host() {
-  : # nothing to install
+  APR_DIR_HOST=$(ls -d $ROOT/$BUILD/apr-[0-9]*/.$HOST_NAME)
+  cp -PR "$APR_DIR_HOST/apr-1-config" "$ROOT/$TOOLCHAIN/bin"
 }

@@ -1,2 +1,8 @@
-[B]1.0.0[/B]
+1.0.0
 - initial public version of mysql addon
+
+2.0.0
+- replaced with kodi
+- compiled on OE 5.0.0
+- added readme file
+- updated copyrights

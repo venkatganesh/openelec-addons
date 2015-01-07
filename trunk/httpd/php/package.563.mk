@@ -1,6 +1,8 @@
 ################################################################################
 #      This file is part of OpenELEC - http://www.openelec.tv
 #      Copyright (C) 2009-2012 Stephan Raue (stephan@openelec.tv)
+#      Copyright (C) 2014-2015 streppuiu
+#      Copyright (C) 2014 ultraman
 #
 #  This Program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -51,7 +53,7 @@ pre_configure_target() {
 
   PKG_CONFIGURE_OPTS_TARGET="--disable-all \
                              --without-pear \
-                             --with-config-file-path=/storage/.xbmc/userdata/addon_data/service.web.httpd/srvroot/conf \
+                             --with-config-file-path=/storage/.kodi/userdata/addon_data/service.web.httpd/srvroot/conf \
                              --localstatedir=/var \
                              --enable-sockets \
                              --enable-session \
@@ -68,7 +70,6 @@ pre_configure_target() {
                              --with-openssl=$SYSROOT_PREFIX/usr \
                              --with-zlib=$SYSROOT_PREFIX/usr \
                              --with-bz2=$SYSROOT_PREFIX/usr \
-                             --with-zlib=$SYSROOT_PREFIX/usr
                              --disable-cgi \
                              --without-gettext \
                              --without-gmp \
