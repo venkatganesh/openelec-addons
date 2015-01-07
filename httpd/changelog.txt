@@ -1,2 +1,10 @@
 1.0.0
 - initial public version of apache httpd addon
+
+2.0.0
+- replaced with kodi
+- added openssl to the addon which is not included in OE any more
+- small fixes
+- compiled on OE 5.0.0
+- updated readme file
+- updated copyrights

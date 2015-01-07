@@ -1,6 +1,8 @@
 ################################################################################
 #      This file is part of OpenELEC - http://www.openelec.tv
 #      Copyright (C) 2009-2014 Stephan Raue (stephan@openelec.tv)
+#      Copyright (C) 2014-2015 streppuiu
+#      Copyright (C) 2014 ultraman
 #
 #  OpenELEC is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -112,6 +114,14 @@ addon() {
 	# add php module to libs folder
 	if [ -d $ROOT/$BUILD/php-[0-9]*/.$TARGET_NAME ]; then
 		cp $ROOT/$BUILD/php-[0-9]*/.$TARGET_NAME/.libs/libphp5.so $ADDON_BUILD/$PKG_ADDON_ID/lib
+	fi
+	
+	# add openssl libs
+	OPENSSL_INSTALLDIR=$ROOT/$BUILD/openssl-[0-9]*/.install_pkg
+	if [ -d $OPENSSL_INSTALLDIR ]; then
+		cp -PR $OPENSSL_INSTALLDIR/etc $ADDON_BUILD/$PKG_ADDON_ID
+		cp -PR $OPENSSL_INSTALLDIR/usr/bin/* $ADDON_BUILD/$PKG_ADDON_ID/bin
+		cp -PR $OPENSSL_INSTALLDIR/usr/lib/* $ADDON_BUILD/$PKG_ADDON_ID/lib
 	fi
 
     # add httpd www folder
